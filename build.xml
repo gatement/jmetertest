@@ -1,0 +1,34 @@
+<project name="jmeter1" basedir="." default="main">
+    <!--<echo message="basedir=${basedir}"/-->
+    <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"/>
+
+    <property name="jmeterhome" value="/usr/local/apache-jmeter-2.13"/>
+    <property name="logs.dir" value="${basedir}/logs"/>
+    <property name="plans.dir" value="${basedir}/plans"/>
+    <property name="result.file" value="${logs.dir}/jmeter1.jtl"/>
+    <property name="report.file" value="${logs.dir}/report1.html"/>
+
+    <target name="clean">
+        <delete dir="${logs.dir}"/>
+    </target>
+    <target name="run">
+        <mkdir dir="${logs.dir}"/>
+        <jmeter jmeterhome="${jmeterhome}" resultlog="${result.file}">
+            <testplans dir="${plans.dir}" includes="*.jmx"/>
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+            <property name="jmeter.save.saveservice.assertion_results" value="all"/>
+            <property name="jmeter.save.saveservice.bytes" value="true"/>
+        </jmeter>
+    </target>
+    <target name="report">
+        <xslt
+            in="${result.file}"
+            out="${report.file}"
+            style="${jmeterhome}/extras/jmeter-results-detail-report_21.xsl"/>
+    </target>
+    <target name="copy-images">
+        <copy file="${jmeterhome}/extras/expand.png" tofile="${logs.dir}/expand.png"/>
+        <copy file="${jmeterhome}/extras/collapse.png" tofile="${logs.dir}/collapse.png"/>
+    </target>
+    <target name="main" depends="clean,run,report,copy-images"/>
+</project>
