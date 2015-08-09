@@ -5,8 +5,8 @@
     <property name="jmeterhome" value="/usr/local/apache-jmeter-2.13"/>
     <property name="logs.dir" value="${basedir}/logs"/>
     <property name="plans.dir" value="${basedir}/plans"/>
-    <property name="result.file" value="${logs.dir}/jmeter1.jtl"/>
-    <property name="report.file" value="${logs.dir}/report1.html"/>
+    <property name="result.file" value="${logs.dir}/jmeter.jtl"/>
+    <property name="report.file" value="${logs.dir}/report.html"/>
 
     <target name="clean">
         <delete dir="${logs.dir}"/>
